@@ -1,23 +1,26 @@
-import { StatusBar } from "expo-status-bar";
-import { StyleSheet, Text, View } from "react-native";
+import { StyleSheet, Text, View, StatusBar, SafeAreaView } from "react-native";
 import StackNavigator from "./StackNavigator";
-//import { UserContext } from "./UserContext";
+import { UserContext } from "./UserContext";
+import { SafeAreaProvider } from "react-native-safe-area-context";
+
 
 export default function App() {
   return (
-    <>
+    
+    <SafeAreaView style={styles.container}>
+      <StatusBar barStyle = "dark-content" hidden = {false} backgroundColor = "#00BCD4" translucent = {true}/>
+        <UserContext>
+          <StackNavigator />
+        </UserContext>
       
-        <StackNavigator />
-      
-    </>
+    </SafeAreaView>
   );
 }
 
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: "#fff",
-    alignItems: "center",
-    justifyContent: "center",
+    //backgroundColor: "blue",
+
   },
 });

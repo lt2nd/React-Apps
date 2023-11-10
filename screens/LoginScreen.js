@@ -13,49 +13,49 @@ import React, { useState, useEffect } from "react";
 import { MaterialIcons } from "@expo/vector-icons";
 import { AntDesign } from "@expo/vector-icons";
 import { useNavigation } from "@react-navigation/native";
-//import axios from "axios";
-//import AsyncStorage from "@react-native-async-storage/async-storage";
+import axios from "axios";
+import AsyncStorage from "@react-native-async-storage/async-storage";
 
 const LoginScreen = () => {
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
     const navigation = useNavigation();
-    // useEffect(() => {
-    //   const checkLoginStatus = async () => {
-    //     try {
-    //       const token = await AsyncStorage.getItem("authToken");
+    useEffect(() => {
+      const checkLoginStatus = async () => {
+        try {
+          const token = await AsyncStorage.getItem("authToken");
 
-    //       if (token) {
-    //         setTimeout(() => {
-    //           navigation.replace("Main");
-    //         }, 400);
-    //       }
-    //     } catch (error) {
-    //       console.log("error", error);
-    //     }
-    //   };
+          if (token) {
+            setTimeout(() => {
+              navigation.replace("Main");
+            }, 400);
+          }
+        } catch (error) {
+          console.log("error", error);
+        }
+      };
 
-    //   checkLoginStatus();
-    // }, []);
-    // const handleLogin = () => {
-    //   const user = {
-    //     email: email,
-    //     password: password,
-    //   };
+      checkLoginStatus();
+    }, []);
+    const handleLogin = () => {
+      const user = {
+        email: email,
+        password: password,
+      };
 
-    //   axios
-    //     .post("http://localhost:3000/login", user)
-    //     .then((response) => {
-    //       console.log(response);
-    //       const token = response.data.token;
-    //       AsyncStorage.setItem("authToken", token);
-    //       navigation.navigate("Main");
-    //     })
-    //     .catch((error) => {
-    //       Alert.alert("Login error");
-    //       console.log("error ", error);
-    //     });
-    // };
+      axios
+        .post("http://192.168.0.105:3000/login", user)
+        .then((response) => {
+          console.log(response);
+          const token = response.data.token;
+          AsyncStorage.setItem("authToken", token);
+          navigation.navigate("Main");
+        })
+        .catch((error) => {
+          Alert.alert("Login error");
+          console.log("error ", error);
+        });
+    };
     return (
         <SafeAreaView
             style={{ flex: 1, backgroundColor: "white", alignItems: "center" }}
@@ -96,6 +96,9 @@ const LoginScreen = () => {
                         />
                         <TextInput
                             value={email}
+                            autoCapitalize="none"
+                            keyboardType="email-address"
+                            textContentType="emailAddress"
                             onChangeText={(text) => setEmail(text)}
                             placeholderTextColor={"gray"}
                             style={{
@@ -160,7 +163,7 @@ const LoginScreen = () => {
                 <View style={{ marginTop: 45 }} />
 
                 <Pressable
-                    //onPress={handleLogin}
+                    onPress={handleLogin}
                     style={{
                         width: 200,
                         backgroundColor: "black",
